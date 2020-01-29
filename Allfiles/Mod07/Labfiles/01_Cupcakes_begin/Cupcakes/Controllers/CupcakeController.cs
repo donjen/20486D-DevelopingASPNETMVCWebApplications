@@ -72,14 +72,15 @@ namespace Cupcakes.Controllers
         public async Task<IActionResult> EditPost(int id)
         {
             var cupcakeToUpdate = _repository.GetCupcakeById(id);
-            bool isUpdated = await TryUpdateModelAsync<Cupcake>(
+            bool isUpdated = await TryUpdateModelAsync(
                 cupcakeToUpdate,
                 "",
                 c => c.BakeryId, 
                 c => c.CupcakeType, 
                 c => c.Description, 
                 c => c.GlutenFree,
-                c => c.Price);
+                c => c.Price,
+                c => c.CaloricValue);
             if (isUpdated == true)
             {
                 _repository.SaveChanges();

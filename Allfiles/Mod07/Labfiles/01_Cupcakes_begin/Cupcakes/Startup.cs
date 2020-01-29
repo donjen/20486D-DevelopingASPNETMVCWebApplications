@@ -25,17 +25,13 @@ namespace Cupcakes
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<ICupcakeRepository, CupcakeRepository>();
-      string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=BakeriesDb;Trusted_Connection=True;MultipleActiveResultSets=true";
-      services.AddDbContext<CupcakeContext>(options =>
-                 options.UseSqlServer(connectionString));
+            services.AddDbContext<CupcakeContext>(options =>
+                options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
         }
 
-        public void Configure(IApplicationBuilder app, CupcakeContext cupcakeContext)
+        public void Configure(IApplicationBuilder app)
         {
-            cupcakeContext.Database.EnsureDeleted();
-            cupcakeContext.Database.EnsureCreated();
-
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
