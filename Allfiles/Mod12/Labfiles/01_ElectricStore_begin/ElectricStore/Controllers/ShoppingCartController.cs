@@ -41,5 +41,9 @@ namespace ElectricStore.Controllers
             }
             return View();
         }
+        public IActionResult Chat()
+        {
+            return View();
+        }
     }
 }

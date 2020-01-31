@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ElectricStore.Data;
+using ElectricStore.Hubs;
 using ElectricStore.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,6 +22,7 @@ namespace ElectricStore
             {
                 options.IdleTimeout = TimeSpan.FromSeconds(60);
             });
+            services.AddSignalR();
             services.AddMvc();
         }
 
@@ -34,7 +36,10 @@ namespace ElectricStore
 
             app.UseNodeModules(environment.ContentRootPath);
             app.UseSession();
-
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/chatHub");
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
