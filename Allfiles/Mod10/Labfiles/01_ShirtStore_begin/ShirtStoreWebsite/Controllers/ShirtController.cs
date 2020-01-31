@@ -4,11 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ShirtStoreWebsite.Models;
+using ShirtStoreWebsite.Services;
+using ShirtStoreWebsite.Services.Interface;
 
 namespace ShirtStoreWebsite.Controllers
 {
     public class ShirtController : Controller
     {
+        private IShirtRepository _repository;
+
+        public ShirtController(IShirtRepository repository)
+        {
+            _repository = repository;
+        }
 
         public IActionResult Index()
         {
